@@ -1,6 +1,7 @@
 package org.eclipse.rdf4j.benchmark;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.rdf4j.common.io.FileUtil;
@@ -64,9 +65,7 @@ public class QueryOrderBenchmark {
 	@Setup
 	@Before
 	public void setup() throws Exception {
-		tempDir = File.createTempFile("nativestore", "");
-		tempDir.delete();
-		tempDir.mkdirs();
+		tempDir = Files.createTempDirectory("nativestore").toFile();
 		NativeStore sail = new NativeStore(tempDir, "spoc,posc");
 		sail.setIterationCacheSyncThreshold(syncThreshold);
 		repository = new SailRepository(sail);
